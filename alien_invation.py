@@ -1,9 +1,11 @@
 import sys
 import pygame
+import random
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+
 
 class AlienInvation:
     """Overall calss to mange game assets and behavior."""
@@ -22,6 +24,7 @@ class AlienInvation:
         self.aliens = pygame.sprite.Group()
         self._create_fleet()
 
+
     def run_game(self): 
         """Start the main loop for the game."""
         while True:
@@ -30,6 +33,7 @@ class AlienInvation:
             self.bullets.update()
             self._update_bullets()
             self._update_screen()
+            self._stars_background_on()
 
     def _check_events(self):
         """This method called helper method, it prfixs with _"""
@@ -112,12 +116,63 @@ class AlienInvation:
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
-        self.screen.fill(self.settings.bg_color)
+        #self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
         pygame.display.flip()
+
+    def _stars_background_on(self):
+        """ Making a three typs of stars on a black background"""
+        #create the locations of the stars for when we animate the background
+        star_field_slow = []
+        star_field_medium = []
+        star_field_fast = []
+
+        for slow_stars in range(50): #birth those plasma balls, baby
+            star_loc_x = random.randrange(0, self.settings.screen_width)
+            star_loc_y = random.randrange(0, self.settings.screen_height)
+            star_field_slow.append([star_loc_x, star_loc_y]) #i love your balls
+
+        for medium_stars in range(35):
+            star_loc_x = random.randrange(0, self.settings.screen_width)
+            star_loc_y = random.randrange(0, self.settings.screen_height)
+            star_field_medium.append([star_loc_x, star_loc_y])
+
+        for fast_stars in range(15):
+            star_loc_x = random.randrange(0, self.settings.screen_width)
+            star_loc_y = random.randrange(0, self.settings.screen_height)
+            star_field_fast.append([star_loc_x, star_loc_y])
+
+        #my soul knows only darkness
+        self.screen.fill((0, 0, 0))
+
+        #animate some motherfucking stars
+        for star in star_field_slow:
+            star[1] += 1
+            if star[1] > self.settings.screen_height:
+                star[0] = random.randrange(0, self.settings.screen_width)
+                star[1] = random.randrange(-10, 10)
+            pygame.draw.circle(self.screen, (128, 128, 128), star, 3)
+
+        for star in star_field_medium:
+            star[1] += 4
+            if star[1] > self.settings.screen_height:
+                star[0] = random.randrange(0, self.settings.screen_width)
+                star[1] = random.randrange(-10, 10)
+            pygame.draw.circle(self.screen, (192, 192, 192), star, 2)
+
+        for star in star_field_fast:
+            star[1] += 8
+            if star[1] > self.settings.screen_height:
+                star[0] = random.randrange(0, self.settings.screen_width)
+                star[1] = random.randrange(-10, 10)
+            pygame.draw.circle(self.screen, (255, 255, 0), star, 1)
+
+        #set frames per second
+        pygame.time.Clock()
+
 
 if __name__ == '__main__':
     # Make a game instance, and run the game.
