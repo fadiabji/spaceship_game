@@ -1,0 +1,59 @@
+[33mcommit 6fea6327cddc93619e4d003450994ce3e623aec1[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: fadiabji <fadi.abji@htomail.com>
+Date:   Mon Jul 18 14:42:35 2022 +0200
+
+    make a spacship move up and down inside the screen size
+
+[33mcommit 597f6e3864244902a55883879b213a4b52362692[m
+Author: fadiabji <fadi.abji@htomail.com>
+Date:   Mon Jul 18 13:56:46 2022 +0200
+
+    After refactoring the methods
+
+[33mcommit a165c8bdc477d0ce22c3e7c6af4db3bb9a1a35fb[m
+Author: fadiabji <fadi.abji@htomail.com>
+Date:   Mon Jul 18 13:26:44 2022 +0200
+
+    Make the ship moving in the screen range, the next setp is refactoring _Check_events()
+
+[33mcommit f1449ea02ec92ce6858ebfe8ecfd5adb4bed4f55[m
+Author: fadiabji <fadi.abji@htomail.com>
+Date:   Mon Jul 18 12:58:14 2022 +0200
+
+    make continuese right and left movement to the ship
+
+[33mcommit 415d6b88b73ae2decfe3b6570a93c58e66bfac17[m
+Author: fadiabji <fadi.abji@htomail.com>
+Date:   Mon Jul 18 12:31:34 2022 +0200
+
+    refactoring the code to two helper methods and change the color of sky to skybule
+
+[33mcommit 10c20376c07d296dd30f581fa5e7edae27cdbc7f[m
+Author: fadiabji <fadi.abji@htomail.com>
+Date:   Mon Jul 18 12:12:20 2022 +0200
+
+    adding a spaceship to the screen
+
+[33mcommit 893cb8efbd7b79825db41265e1eb0746e1e2da0b[m
+Author: fadiabji <fadi.abji@htomail.com>
+Date:   Sun Jul 17 15:15:38 2022 +0200
+
+    create a ship class to add later to the alien_invation.py file
+
+[33mcommit cdf7ca08f356909e5713673d6b20dd652a6deaca[m
+Author: fadiabji <fadi.abji@htomail.com>
+Date:   Sun Jul 17 14:46:48 2022 +0200
+
+    create a sperate class for settings and but the settings variable in it
+
+[33mcommit 93b2321235ad97567c8513f16aaf6dcec74a825a[m
+Author: fadiabji <fadi.abji@htomail.com>
+Date:   Sun Jul 17 13:30:17 2022 +0200
+
+    Set screen background color
+
+[33mcommit 610d15a881079ca163982c61ea8706b0f83b5d3b[m
+Author: fadiabji <fadi.abji@htomail.com>
+Date:   Sun Jul 17 13:23:26 2022 +0200
+
+    Started projcet
