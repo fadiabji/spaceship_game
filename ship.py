@@ -38,12 +38,12 @@ class Ship:
         if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
             self.rect.y += self.settings.ship_speed
 
-        
-        # update rect objcet form self.x.
-        #self.rect.x = self.x
-
-
 
     def blitme(self):
         """Draw the ship at its current location."""
         self.screen.blit(self.image, self.rect)
+
+    def center_ship(self):
+        """Center the ship on the screen."""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
