@@ -24,6 +24,7 @@ class Ship:
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
+        # self.fire = False
          
 
     def update(self):

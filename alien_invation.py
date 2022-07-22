@@ -86,6 +86,10 @@ class AlienInvation:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+        self._check_bullet_alien_collisions()
+    
+    def _check_bullet_alien_collisions(self):
+        """Response to bullet-alien collisions."""
         # Check for any bullets that have hit aliens.
         # If so, get rid of the bullet and the alien.
         collisions = pygame.sprite.groupcollide(
@@ -95,6 +99,15 @@ class AlienInvation:
             # Destory existing bullets and create new fleet.
             self.bullets.empty()
             self._create_fleet()
+
+    def _create_alien(self, alien_number, row_number):
+        # Create an alien and place it in the row.
+        alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+        alien.x = alien_width + 2 * alien_width * alien_number
+        alien.rect.x = alien.x
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
+        self.aliens.add(alien)
 
     def _create_fleet(self):
         """Create the fleet of aliens."""
@@ -127,19 +140,13 @@ class AlienInvation:
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
 
-    def _create_alien(self, alien_number, row_number):
-        # Create an alien and place it in the row.
-        alien = Alien(self)
-        alien_width, alien_height = alien.rect.size
-        alien.x = alien_width + 2 * alien_width * alien_number
-        alien.rect.x = alien.x
-        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
-        self.aliens.add(alien)
 
     def _update_aliens(self):
         """Update the postion of all aliens at an edge, then update the position of all aliens in the fleet."""
         self._check_fleet_edges()
         self.aliens.update()
+
+    
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
@@ -149,6 +156,7 @@ class AlienInvation:
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
         pygame.display.flip()
+
 
     def _stars_background_on(self):
         """ Making a three typs of stars on a black background"""
