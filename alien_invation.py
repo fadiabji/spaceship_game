@@ -27,7 +27,6 @@ class AlienInvation:
         self.bullets = pygame.sprite.Group() 
         self.aliens = pygame.sprite.Group()
         self._create_fleet()
-        self.eliminated_aliens = 0
 
 
     def run_game(self): 
@@ -41,10 +40,6 @@ class AlienInvation:
                 self._update_aliens()
                 self._update_screen()
                 self._stars_background_on()
-            else:
-                self._get_result()
-                break
-
 
     def _check_events(self):
         """This method called helper method, it prfixs with _"""
@@ -102,12 +97,10 @@ class AlienInvation:
         """Response to bullet-alien collisions."""
         # Check for any bullets that have hit aliens.
         # If so, get rid of the bullet and the alien.
-        if self.aliens:
-            collisions = pygame.sprite.groupcollide(
-            self.bullets, self.aliens, True ,True)
-            self.eliminated_aliens += 1
-            # create a new fleet when we get ride of the former fleet.
-        else:
+        collisions = pygame.sprite.groupcollide(
+        self.bullets, self.aliens, True ,True)
+        # create a new fleet when we get ride of the former fleet.
+        if not self.aliens:
             # Destory existing bullets and create new fleet.
             self.bullets.empty()
             self._create_fleet()
@@ -249,12 +242,6 @@ class AlienInvation:
                 # Treat this the same as if the ship got hit.
                 self._ship_hit()
                 break
-
-    def _get_result(self):
-        """return ships left and eliminated alines"""
-        print(self.stats.ships_left)
-        print(f"Eliminated aliens: {self.eliminated_aliens} ")
-
 
 if __name__ == '__main__':
     # Make a game instance, and run the game.
