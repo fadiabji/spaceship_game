@@ -46,6 +46,8 @@ class Alien(Sprite):
             self.y += (self.settings.alien_speed * -1)
             self.rect.y = self.y
 
+
+
         elif self.rect.x - self.ship.rect.x < 0 and self.rect.y - self.ship.rect.y < 0:
             # alien moving to the right
             self.x +=  self.settings.alien_speed
