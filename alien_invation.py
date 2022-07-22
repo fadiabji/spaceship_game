@@ -145,8 +145,7 @@ class AlienInvation:
         """Update the postion of all aliens at an edge, then update the position of all aliens in the fleet."""
         self._check_fleet_edges()
         self.aliens.update()
-
-    
+        
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
@@ -207,7 +206,6 @@ class AlienInvation:
 
         #set frames per second
         pygame.time.Clock()
-
 
 
 if __name__ == '__main__':

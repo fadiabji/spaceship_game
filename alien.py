@@ -38,25 +38,42 @@ class Alien(Sprite):
 
     def attack_ship(self):
         """make aliens attack the ship"""
-        if self.rect.x - self.ship.rect.x > 0:
+        if self.rect.x - self.ship.rect.x > 0 and self.rect.y - self.ship.rect.y > 0 :
             # alien moving to the left
             self.x += (self.settings.alien_speed * -1)
             self.rect.x = self.x
-
-        elif self.rect.x - self.ship.rect.x < 0:
-            # alien moving to the right
-            self.x +=  self.settings.alien_speed
-            self.rect.x = self.x
-        
-        elif self.rect.y - self.ship.rect.y > 0:
             # alien moving down
             self.y += (self.settings.alien_speed * -1)
             self.rect.y = self.y
 
-        elif self.rect.y - self.ship.rect.y < 0:
+
+
+        elif self.rect.x - self.ship.rect.x < 0 and self.rect.y - self.ship.rect.y < 0:
+            # alien moving to the right
+            self.x +=  self.settings.alien_speed
+            self.rect.x = self.x
                 # alien moving up
             self.y += self.settings.alien_speed
             self.rect.y = self.y
+
+        elif self.rect.x - self.ship.rect.x > 0 and self.rect.y - self.ship.rect.y < 0 :
+             # alien moving to the left
+            self.x += (self.settings.alien_speed * -1)
+            self.rect.x = self.x
+            # alien moving up
+            self.y += self.settings.alien_speed
+            self.rect.y = self.y
+
+        elif self.rect.x - self.ship.rect.x < 0 and self.rect.y - self.ship.rect.y > 0 :
+            # alien moving to the right
+            self.x +=  self.settings.alien_speed
+            self.rect.x = self.x
+            # alien moving down
+            self.y += (self.settings.alien_speed * -1)
+            self.rect.y = self.y
+
+
+
 
 
     # def random(self):
