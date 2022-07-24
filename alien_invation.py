@@ -4,6 +4,7 @@ import pygame
 import random
 from settings import Settings
 from game_stats import GameStats
+from scoreboard import Scoreboard
 from button import Button
 from ship import Ship
 from bullet import Bullet
@@ -23,15 +24,15 @@ class AlienInvation:
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invation")
         # Create an instance to store game statistics.
+        # and creat a scorboard.
         self.stats = GameStats(self)
+        self.sb = Scoreboard(self)
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group() 
         self.aliens = pygame.sprite.Group()
-        self._create_fleet()
-        self.aliens_score = 0
+        self._create_fleet()  
         # Make the play button.
         self.play_button = Button(self, "Play")
-        
 
 
     def run_game(self): 
@@ -74,6 +75,8 @@ class AlienInvation:
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
+        elif event.key == pygame.K_p:
+            self._start_game()
 
     def _check_keyup_events(self, event):
         """Respond to key releases."""
@@ -108,13 +111,21 @@ class AlienInvation:
         collisions = pygame.sprite.groupcollide(
         self.bullets, self.aliens, True ,True)
         if collisions:
-            self.aliens_score += 1 
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
+            # self.stats.score += self.settings.alien_points
+            self.sb.prep_score()
+            self.sb.check_high_score()
         # create a new fleet when we get ride of the former fleet.
-        elif not self.aliens:
+        if not self.aliens:
             # Destory existing bullets and create new fleet.
             self.bullets.empty()
             self._create_fleet()
             self.settings.increase_speed()
+
+            # increase level.
+            self.stats.level += 1
+            self.sb.prep_level()
 
     def _create_alien(self, alien_number, row_number):
         # Create an alien and place it in the row.
@@ -174,6 +185,8 @@ class AlienInvation:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+        # Draw the score information.
+        self.sb.show_score()
         # Draw the play button if the game is inactive.
         if not self.stats.game_active:
             self.play_button.draw_button()
@@ -235,6 +248,7 @@ class AlienInvation:
         if self.stats.ships_left > 0 :
             # Decrement ships_left.
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
             # Get rid of any remaining aliens and bullets.
             self.aliens.empty()
             self.bullets.empty()
@@ -244,7 +258,6 @@ class AlienInvation:
             # Pause.
             sleep(0.5)
         else:
-            print(f"self.aliens_score = {self.aliens_score}")
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
@@ -260,24 +273,30 @@ class AlienInvation:
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+
         if button_clicked and not self.stats.game_active:
+            self._start_game()
             # Reset the game settings.
             self.settings.initialize_dynamic_settings()
-            # Reset the game statistics.
-            self.stats.game_active = True
-            #self.stats.reset_stats()
+            self.sb.prep_score()
+            self.sb.prep_level()
+            self.sb.prep_ships()
+    
+    def _start_game(self):
+        """Start a new game when the player press p or click on mouse."""
+        # Reset the game statistics.
+        self.stats.game_active = True
+        #self.stats.reset_stats()
+        # Get rid of any remaining aliens and bullets.
+        self.aliens.empty()
+        self.bullets.empty()
+        # Create a new fleet and center the ship.
+        self._create_fleet()
+        self.ship.center_ship()
 
-            # Get rid of any remaining aliens and bullets.
-            self.aliens.empty()
-            self.bullets.empty()
-
-            # Create a new fleet and center the ship.
-            self._create_fleet()
-            self.ship.center_ship()
-
-            # Hide the mouse cursor.
-            pygame.mouse.set_visible(False)
-
+        # Hide the mouse cursor.
+        pygame.mouse.set_visible(False)
+            
 if __name__ == '__main__':
     # Make a game instance, and run the game.
     ai = AlienInvation()
